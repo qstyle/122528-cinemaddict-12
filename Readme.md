@@ -1,7 +1,7 @@
 # Личный проект «Киноман» [![Build status][travis-image]][travis-url]
 
 * Студент: [Dmitry Ordin](https://up.htmlacademy.ru/ecmascript/12/user/122528).
-* Наставник: `Неизвестно`.
+* Наставник: [Александр Белокур](https://htmlacademy.ru/profile/alex-belokur).
 
 ---
 
