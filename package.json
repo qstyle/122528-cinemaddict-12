@@ -10,7 +10,6 @@
     "start": "webpack-dev-server --open"
   },
   "devDependencies": {
-    "eslint": "6.1.0",
     "eslint-config-htmlacademy": "0.5.2",
     "webpack": "4.44.1",
     "webpack-cli": "3.3.12",
@@ -19,5 +18,7 @@
   "engines": {
     "node": "10"
   },
-  "dependencies": {}
+  "dependencies": {
+    "eslint": "^7.5.0"
+  }
 }
