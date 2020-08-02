@@ -1,4 +1,5 @@
-export const filmCardBlock = `<article class="film-card">
+export const filmCardBlock = ()=>{
+  return `<article class="film-card">
   <h3 class="film-card__title">Santa Claus Conquers the Martians</h3>
   <p class="film-card__rating">2.3</p>
   <p class="film-card__info">
@@ -15,3 +16,4 @@ export const filmCardBlock = `<article class="film-card">
     <button class="film-card__controls-item button film-card__controls-item--favorite film-card__controls-item--active">Mark as favorite</button>
   </form>
 </article>`;
+};

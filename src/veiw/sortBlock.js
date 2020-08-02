@@ -1,5 +1,5 @@
-
-export const sortBlock = `<nav class="main-navigation">
+export const sortBlock = ()=>{
+  return `<nav class="main-navigation">
 <div class="main-navigation__items">
   <a href="#all" class="main-navigation__item main-navigation__item--active">All movies</a>
   <a href="#watchlist" class="main-navigation__item">Watchlist <span class="main-navigation__item-count">13</span></a>
@@ -13,3 +13,4 @@ export const sortBlock = `<nav class="main-navigation">
 <li><a href="#" class="sort__button">Sort by date</a></li>
 <li><a href="#" class="sort__button">Sort by rating</a></li>
 </ul>`;
+};
