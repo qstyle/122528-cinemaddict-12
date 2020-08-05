@@ -1,10 +1,20 @@
 import {generateRandomNumber} from "../generateRandomNumberUtils.js";
+const MOCK_COUNT = 20;
 
 
-export const generateMockData = ()=>{
+export const generateMockDataArrays = ()=>{
+  let mockData = [];
+  for (let i = 0; i < MOCK_COUNT; i++) {
+    mockData.push(generateMockData());
+  }
+  return mockData;
+
+};
+
+const generateMockData = ()=>{
   return {
     filmName: `name`,
-    poster: `./images/posters/popeye-meets-sinbad.png`,
+    poster: generateRandomPoster(),
     rating: `****`,
     yearOfIssue: `2000`,
     timeLine: generateRandomNumber(10, 20),
@@ -20,4 +30,12 @@ export const generateMockData = ()=>{
     fullDescription: `blablabla2`,
     ageRating: `0+`,
   };
+};
+const generateRandomPoster = ()=>{
+  const postersArray = [`./images/posters/made-for-each-other.png`, `./images/posters/popeye-meets-sinbad.png`,
+    `./images/posters/sagebrush-trail.jpg`,
+    `./images/posters/santa-claus-conquers-the-martians.jpg`, `./images/posters/the-dance-of-life.jpg`,
+    `./images/posters/the-great-flamarion.jpg`, `./images/posters/the-man-with-the-golden-arm.jpg`];
+  const randomIndexPosrer = generateRandomNumber(0, postersArray.length);
+  return postersArray[randomIndexPosrer];
 };

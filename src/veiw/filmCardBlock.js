@@ -1,6 +1,5 @@
-import {generateMockData} from "../mock/generateMockData.js";
-const filmData = generateMockData();
-export const reateFilmCardBlockTemplate = ()=>{
+
+export const createFilmCardBlockTemplate = (filmData)=>{
   return `<article class="film-card">
   <h3 class="film-card__title">${filmData.filmName}</h3>
   <p class="film-card__rating">${filmData.rating}</p>

@@ -1,7 +1,9 @@
 import {createProfileTemplate} from "./veiw/profileBlock.js";
 import {createsSortBlockTemplate} from "./veiw/sortBlock.js";
 import {createFilmContainerBlockTemplate} from "./veiw/filmContainerBlock.js";
-import {reateFilmCardBlockTemplate} from "./veiw/filmCardBlock.js";
+import {createFilmCardBlockTemplate} from "./veiw/filmCardBlock.js";
+import {generateMockDataArrays} from "./mock/generateMockData.js";
+
 
 const RENDER_COUNT = {
   five: 5,
@@ -10,6 +12,7 @@ const RENDER_COUNT = {
 
 const hraderNode = document.querySelector(`.header`);
 const mainNode = document.querySelector(`.main`);
+const mockData = generateMockDataArrays();
 
 function render(htmlBlock, parent, position, quantity) {
   for (let i = 0; i < quantity; i++) {
@@ -23,14 +26,15 @@ function renderAllBlock() {
   render(createFilmContainerBlockTemplate(), mainNode, `beforeend`, RENDER_COUNT.one);
   renderContentInBlock();
 }
-renderAllBlock();
+
 
 function renderContentInBlock() {
+  const dataFilmArrays = mockData.splice(0, 5);
   const filmListContainerNode = mainNode.querySelector(`.films-list .films-list__container`);
-  render(reateFilmCardBlockTemplate(), filmListContainerNode, `beforeend`, RENDER_COUNT.five);
-  const filmExtraContainerNode = mainNode.querySelectorAll(`.films-list--extra .films-list__container`);
-  filmExtraContainerNode.forEach((block) => {
-    render(reateFilmCardBlockTemplate(), block, `beforeend`, RENDER_COUNT.two);
-  });
+  for (let i = 0; i < RENDER_COUNT.five; i++) {
+    render(createFilmCardBlockTemplate(dataFilmArrays[i]), filmListContainerNode, `beforeend`, RENDER_COUNT.one);
+  }
 }
-
+renderAllBlock();
+const showMoreButton = document.querySelector(`.films-list__show-more`);
+showMoreButton.addEventListener(`click`, renderContentInBlock);
