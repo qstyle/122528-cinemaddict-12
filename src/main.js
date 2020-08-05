@@ -17,12 +17,13 @@ function render(htmlBlock, parent, position, quantity) {
   }
 }
 
-(function renderAllBlock() {
+function renderAllBlock() {
   render(createProfileTemplate(), hraderNode, `beforeend`, RENDER_COUNT.one);
   render(createsSortBlockTemplate(), mainNode, `beforeend`, RENDER_COUNT.one);
   render(createFilmContainerBlockTemplate(), mainNode, `beforeend`, RENDER_COUNT.one);
   renderContentInBlock();
-})();
+}
+renderAllBlock();
 
 function renderContentInBlock() {
   const filmListContainerNode = mainNode.querySelector(`.films-list .films-list__container`);
@@ -32,3 +33,4 @@ function renderContentInBlock() {
     render(reateFilmCardBlockTemplate(), block, `beforeend`, RENDER_COUNT.two);
   });
 }
+
