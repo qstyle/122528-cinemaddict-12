@@ -1,5 +1,6 @@
+import {createElement} from '../utils';
 
-export const createFilmCardBlockTemplate = (filmData)=>{
+const createFilmCardBlockTemplate = (filmData)=>{
   return `<article class="film-card">
   <h3 class="film-card__title">${filmData.filmName}</h3>
   <p class="film-card__rating">${filmData.rating}</p>
@@ -18,3 +19,25 @@ export const createFilmCardBlockTemplate = (filmData)=>{
   </form>
 </article>`;
 };
+
+export default class FilmCard {
+  constructor(filmData) {
+    this._filmData = filmData;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createFilmCardBlockTemplate(this._filmData);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

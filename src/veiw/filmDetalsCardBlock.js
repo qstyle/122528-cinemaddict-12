@@ -1,5 +1,6 @@
+import {createElement} from '../utils';
 
-export const filmDetalsCardBlock = (filmData)=>{
+const filmDetalsCardBlock = (filmData)=>{
   return `<section class="film-details">
 <form class="film-details__inner" action="" method="get">
   <div class="form-details__top-container">
@@ -170,3 +171,25 @@ export const filmDetalsCardBlock = (filmData)=>{
 </form>
 </section>`;
 };
+
+export default class FilmDetalsCard {
+  constructor(filmData) {
+    this._filmData = filmData;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return filmDetalsCardBlock(this._filmData);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
