@@ -15,7 +15,7 @@ const generateMockData = ()=>{
   return {
     filmName: `name`,
     poster: generateRandomPoster(),
-    rating: `${generateRandomNumber(1, 10)},${generateRandomNumber(1, 99)}`,
+    rating: Number(`${generateRandomNumber(1, 9)}.${generateRandomNumber(1, 99)}`),
     yearOfIssue: `2000`,
     timeLine: `${generateRandomNumber(1, 2)} h ${generateRandomNumber(0, 60)} min`,
     genre: `comedy`,
