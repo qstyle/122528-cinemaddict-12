@@ -3,10 +3,12 @@ import FilmContainer from "./veiw/filmContainerBlock.js";
 import SortBlock from "./veiw/sortBlock.js";
 import ProfileBlock from "./veiw/profileBlock.js";
 import FilmDetalsCard from "./veiw/filmDetalsCardBlock.js";
-import {generateMockDataArrays} from "./mock/generateMockData.js";
 import FilmCard from "./veiw/filmCardBlock.js";
-import {generateTopRateArray} from "./generateTopRateArryay.js";
-import {generateMostComented} from "./generateMostCommentedArray.js";
+import {generateMockDataArrays} from "./mock/generateMockData.js";
+import {sortTopRateArray} from "./sortTopRateArryay.js";
+import {sortMostCommented} from "./sortMostCommentedArray.js";
+import {renderElement} from "./utils.js";
+import {deleteBlock} from "./utils.js";
 
 const RENDER_COUNT = {
   five: 5,
@@ -19,18 +21,6 @@ const mainNode = document.querySelector(`.main`);
 const mockData = generateMockDataArrays();
 const bodyNode = document.querySelector(`body`);
 
-// eslint-disable-next-line no-unused-vars
-function render(htmlBlock, parent, position, quantity) {
-  for (let i = 0; i < quantity; i++) {
-    parent.insertAdjacentHTML(position, htmlBlock);
-  }
-}
-function renderElement(htmlBlock, parent) {
-  parent.append(htmlBlock);
-}
-function deleteBlock(htmlBlock) {
-  htmlBlock.remove();
-}
 
 function renderAllBlock() {
   const filmContainerTempalte = new FilmContainer();
@@ -62,14 +52,25 @@ renderAllBlock();
 const showMoreButton = document.querySelector(`.films-list__show-more`);
 showMoreButton.addEventListener(`click`, renderContentInBlock);
 const closePopup = ()=>{
+  const buttonClosePopup = bodyNode.querySelector(`.film-details__close-btn`);
   const filmDetalsCard = bodyNode.querySelector(`.film-details`);
   deleteBlock(filmDetalsCard);
+  document.removeEventListener(`keypress`, closePopupEsc);
+  buttonClosePopup.removeEventListener(`click`, closePopup);
 };
+
+function closePopupEsc(evt) {
+  evt.preventDefault();
+  if (evt.key === `Escape`) {
+    closePopup();
+  }
+}
 
 const renderPopup = () => {
   const FilmDetalsBlock = new FilmDetalsCard(mockData[0]);
   renderElement(FilmDetalsBlock.getElement(), bodyNode);
   const buttonClosePopup = bodyNode.querySelector(`.film-details__close-btn`);
+  document.addEventListener(`keypress`, closePopupEsc);
   buttonClosePopup.addEventListener(`click`, closePopup);
 };
 const filmPosterNode = document.querySelectorAll(`.film-card__poster`);
@@ -79,7 +80,7 @@ filmPosterNode.forEach((poster)=>{
 
 const topRateContainer = document.querySelectorAll(`.films-list--extra .films-list__container`);
 const renderTopRateFilm = ()=>{
-  const sortArray = generateTopRateArray(mockData);
+  const sortArray = sortTopRateArray(mockData);
 
   for (let i = 0; i < RENDER_COUNT.two; i++) {
     const filmCardElement = new FilmCard(sortArray[i]);
@@ -87,7 +88,7 @@ const renderTopRateFilm = ()=>{
   }
 };
 const renderMostComentedFilm = ()=>{
-  const sortArray = generateMostComented(mockData);
+  const sortArray = sortMostCommented(mockData);
   for (let i = 0; i < RENDER_COUNT.two; i++) {
     const filmCardElement = new FilmCard(sortArray[i]);
     renderElement(filmCardElement.getElement(), topRateContainer[1]);
@@ -95,4 +96,5 @@ const renderMostComentedFilm = ()=>{
 };
 renderTopRateFilm();
 renderMostComentedFilm();
+
 

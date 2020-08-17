@@ -4,3 +4,9 @@ export const createElement = (template) => {
 
   return newElement.firstChild;
 };
+export function renderElement(htmlBlock, parent) {
+  parent.append(htmlBlock);
+}
+export function deleteBlock(htmlBlock) {
+  htmlBlock.remove();
+}
