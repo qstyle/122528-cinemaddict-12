@@ -1,4 +1,4 @@
-import {createElement} from '../utils';
+import Abstract from './abstract.js';
 
 const filmDetalsCardBlock = (filmData)=>{
   return `<section class="film-details">
@@ -172,24 +172,13 @@ const filmDetalsCardBlock = (filmData)=>{
 </section>`;
 };
 
-export default class FilmDetalsCard {
+export default class FilmDetalsCard extends Abstract {
   constructor(filmData) {
+    super();
     this._filmData = filmData;
-    this._element = null;
   }
 
   getTemplate() {
     return filmDetalsCardBlock(this._filmData);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

@@ -1,4 +1,4 @@
-import {createElement} from '../utils';
+import Abstract from './abstract.js';
 
 const createsSortBlockTemplate = ()=>{
   return `<nav class="main-navigation">
@@ -17,23 +17,8 @@ const createsSortBlockTemplate = ()=>{
 </ul>`;
 };
 
-export default class SortBlock {
-  constructor() {
-    this._element = null;
-  }
-
+export default class SortBlock extends Abstract {
   getTemplate() {
     return createsSortBlockTemplate();
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
