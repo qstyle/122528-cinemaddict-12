@@ -177,7 +177,6 @@ export default class FilmDetalsCard extends Abstract {
     super();
     this._filmData = filmData;
   }
-
   getTemplate() {
     return filmDetalsCardBlock(this._filmData);
   }

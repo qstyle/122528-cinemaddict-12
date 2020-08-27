@@ -1,5 +1,5 @@
 import {generateRandomNumber} from "../generateRandomNumberUtils.js";
-const MOCK_COUNT = 20;
+const MOCK_COUNT = 19;
 
 
 export const generateMockDataArrays = ()=>{
@@ -27,7 +27,7 @@ const generateMockData = ()=>{
     actors: `Дэнни дэ Витто`,
     relisData: `«01 April 1995»`,
     genres: generateGanres(),
-    fullDescription: `blablabla`,
+    fullDescription: `blahblahblah`,
     ageRating: `0+`,
     productCountry: `USA`,
   };
