@@ -177,7 +177,22 @@ export default class FilmDetalsCard extends Abstract {
     super();
     this._filmData = filmData;
   }
+
   getTemplate() {
     return filmDetalsCardBlock(this._filmData);
   }
+
+  onClosePopup(callback) {
+    this.getElement().querySelector(`.film-details__close-btn`)
+    .addEventListener(`click`, callback);
+
+    document.addEventListener(`keydown`, escCloser);
+
+    function escCloser(evt) {
+      if (evt.key === `Escape` || evt.key === `Esc`) {
+        callback();
+      }
+    }
+  }
 }
+
