@@ -1,5 +1,5 @@
 import ProfileBlock from "./veiw/profileBlock.js";
-import SortBlock from "./veiw/sortBlock.js";
+
 import {render} from "./utils/render.js";
 import {RENDER_POSITION} from "./const.js";
 import {generateMockDataArrays} from "./mock/generateMockData.js";
@@ -11,6 +11,5 @@ const mockData = generateMockDataArrays();
 const filmList = new FilmList(mainNode);
 
 render(headerNode, new ProfileBlock(), RENDER_POSITION.BEFOREEND);
-render(mainNode, new SortBlock(), RENDER_POSITION.BEFOREEND);
 filmList.init(mockData);
 

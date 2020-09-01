@@ -10,7 +10,9 @@ import MostComentedFilms from "../veiw/mostCommentedFilms.js";
 import sortTopRate from "../utils/sortTopRate.js";
 import sortMostComments from "../utils/sortMostComments.js";
 import FilmDetalsCard from "../veiw/filmDetalsCardBlock.js";
-
+import MainNavigation from "../veiw/mainNavigation.js";
+import SortBlock from "../veiw/sortBlock.js";
+import {sortArrayFilms, sortFilms} from "../utils/sortArrayFilms.js";
 const bodyNode = document.querySelector(`body`);
 
 export default class FilmList {
@@ -18,13 +20,16 @@ export default class FilmList {
     this._container = container;
     this._filmsCount = FILMS_COUNT_PER_STEP;
     this._filmContainerTempalte = new FilmContainer();
-    this._moreButton = new MoreButton();
     this._sectionFilm = new SectionFilm();
     this._topRateFilms = new TopRateFilms();
     this._mostComentedFilms = new MostComentedFilms();
-
+    this._mainNavigation = new MainNavigation();
+    this._sortBlock = new SortBlock();
+    this._moreButton = new MoreButton();
     this._renderFilm = this._renderFilm.bind(this);
     this._closePopup = this._closePopup.bind(this);
+    this._renderNavSort = this._renderNavSort.bind(this);
+    this._renderSortFilms = this._renderSortFilms.bind(this);
   }
 
   init(data) {
@@ -36,13 +41,40 @@ export default class FilmList {
 
   }
 
+  _renderNavSort(sortId) {
+    const films = this._sourcedData.slice();
+    this._data = sortArrayFilms(films, sortId);
+    this._filmContainerBlockNode.innerHTML = ``;
+    this. _renderFilmList();
+
+  }
+
+  _renderMainNavigation() {
+    render(this._container, this._mainNavigation, RENDER_POSITION.AFTERBEGIN);
+    this._mainNavigation.onSortMainNavigation(this._renderNavSort);
+  }
+
+  _renderSortFilms(sortId) {
+
+    this._data = sortFilms(this._data, sortId);
+    this._filmContainerBlockNode.innerHTML = ``;
+    this. _renderFilmList();
+
+  }
+  _renderSortBlock() {
+    render(this._container, this._sortBlock, RENDER_POSITION.AFTERBEGIN);
+    this._sortBlock.onSortfilms(this._renderSortFilms);
+  }
+
   _renderFilm() {
     if (this._data.length > FILMS_COUNT_PER_STEP) {
       for (let i = 0; i < FILMS_COUNT_PER_STEP; i++) {
         this.film = this._data.splice(0, 1);
         const filmCardElement = new FilmCard(this.film[0]);
         filmCardElement.showPopupHandler(this._openPopup.bind(this, this.film[0]));
+        deleteBlock(this._moreButton);
         render(this._filmContainerBlockNode, filmCardElement, RENDER_POSITION.BEFOREEND);
+        this._renderLoadMoreButton();
       }
     } else {
       this._data.forEach((element) => {
@@ -56,7 +88,7 @@ export default class FilmList {
   }
 
   _renderLoadMoreButton() {
-    render(this._sectionFilm, this._moreButton, RENDER_POSITION.BEFOREEND);
+    render(this._filmContainerBlockNode, this._moreButton, RENDER_POSITION.BEFOREEND);
     this._moreButton.showMoreHandler(this._renderFilm);
   }
 
@@ -104,5 +136,7 @@ export default class FilmList {
     this._renderFilmList();
     this._renderTopRateFilm();
     this._renderMostCommentsFilms();
+    this._renderSortBlock();
+    this._renderMainNavigation();
   }
 }

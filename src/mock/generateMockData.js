@@ -1,5 +1,5 @@
 import {generateRandomNumber} from "../generateRandomNumberUtils.js";
-const MOCK_COUNT = 19;
+const MOCK_COUNT = 21;
 
 
 export const generateMockDataArrays = ()=>{
@@ -30,6 +30,9 @@ const generateMockData = ()=>{
     fullDescription: `blahblahblah`,
     ageRating: `0+`,
     productCountry: `USA`,
+    Watchlist: generateRandomNumber(0, 1),
+    History: generateRandomNumber(0, 1),
+    Favorites: generateRandomNumber(0, 1),
   };
 };
 const generateRandomPoster = ()=>{
