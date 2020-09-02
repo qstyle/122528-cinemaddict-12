@@ -1,25 +1,13 @@
-export function sortArrayFilms(array, sortId) {
+export function filterArrayFilms(array, sortId) {
   let filmsSortedArray = [];
   if (sortId === `Watchlist`) {
-    for (let i = 0; i < array.length; i++) {
-      if (array[i].Watchlist) {
-        filmsSortedArray.push(array[i]);
-      }
-    }
+    filmsSortedArray = array.filter((film)=>film.watchlist);
   }
   if (sortId === `History`) {
-    for (let i = 0; i < array.length; i++) {
-      if (array[i].History) {
-        filmsSortedArray.push(array[i]);
-      }
-    }
+    filmsSortedArray = array.filter((film)=>film.history);
   }
   if (sortId === `Favorites`) {
-    for (let i = 0; i < array.length; i++) {
-      if (array[i].Favorites) {
-        filmsSortedArray.push(array[i]);
-      }
-    }
+    filmsSortedArray = array.filter((film)=>film.favorites);
   } if (sortId === `allMovies`) {
     filmsSortedArray = array;
   }

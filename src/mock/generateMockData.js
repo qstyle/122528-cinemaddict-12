@@ -30,9 +30,9 @@ const generateMockData = ()=>{
     fullDescription: `blahblahblah`,
     ageRating: `0+`,
     productCountry: `USA`,
-    Watchlist: generateRandomNumber(0, 1),
-    History: generateRandomNumber(0, 1),
-    Favorites: generateRandomNumber(0, 1),
+    watchlist: generateRandomNumber(0, 1),
+    history: generateRandomNumber(0, 1),
+    favorites: generateRandomNumber(0, 1),
   };
 };
 const generateRandomPoster = ()=>{
