@@ -1,12 +1,12 @@
 export function filterArrayFilms(array, sortId) {
   let filmsSortedArray = [];
-  if (sortId === `Watchlist`) {
+  if (sortId === `watchlist`) {
     filmsSortedArray = array.filter((film)=>film.watchlist);
   }
-  if (sortId === `History`) {
+  if (sortId === `history`) {
     filmsSortedArray = array.filter((film)=>film.history);
   }
-  if (sortId === `Favorites`) {
+  if (sortId === `favorites`) {
     filmsSortedArray = array.filter((film)=>film.favorites);
   } if (sortId === `allMovies`) {
     filmsSortedArray = array;
@@ -33,3 +33,12 @@ export function sortFilms(array, sortId) {
   }
 }
 
+export function getFilterLength(data) {
+  const filterLength = {
+    watchlist: data.filter((film)=>film.watchlist).length,
+    history: data.filter((film)=>film.history).length,
+    favorites: data.filter((film)=>film.favorites).length,
+  };
+  return filterLength;
+
+}

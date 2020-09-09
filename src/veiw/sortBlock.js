@@ -10,13 +10,17 @@ const createSortBlockTemplate = ()=>{
 };
 
 export default class SortBlock extends Abstract {
+
   getTemplate() {
     return createSortBlockTemplate();
   }
-  onSortfilms(callBack) {
+  sortFilmsHandler(callBack) {
     let eventId;
     let sortId;
     this.getElement().addEventListener(`click`, function (evt) {
+      if (evt.target.tagName !== `A`) {
+        return;
+      }
 
       if (eventId === evt.target) {
         return;
@@ -25,7 +29,7 @@ export default class SortBlock extends Abstract {
         sortId = evt.target.dataset.sort;
         callBack(sortId);
       }
-
+      evt.target.classList.add(`sort__button--active`);
     });
   }
 }

@@ -11,5 +11,6 @@ const mockData = generateMockDataArrays();
 const filmList = new FilmList(mainNode);
 
 render(headerNode, new ProfileBlock(), RENDER_POSITION.BEFOREEND);
+
 filmList.init(mockData);
 
