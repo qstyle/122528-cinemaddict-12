@@ -4,8 +4,20 @@ export const RENDER_POSITION = {
   AFTERBEGIN: `afterbegin`,
   BEFOREEND: `beforeend`
 };
-export const SortType = {
-  DEFAULT: `default`,
-  DATE_DOWN: `date-down`,
-  DATE_UP: `date-up`
+
+export const SORTFILMSID = {
+  WATCHLIST: `watchlist`,
+  HISTORY: `history`,
+  FAVORITES: `favorites`,
+  ALLMOVIES: `allMovies`,
+  DATE: `date`,
+  RATING: `rating`,
+  TOPCOMMENTS: `topComments`,
+  DEFAULT: `default`
+};
+
+export const PARENTFORRENDERFILM = {
+  MAINFILM: 0,
+  TOPRTEFILM: 1,
+  TOPCOMMENTFILM: 2,
 };

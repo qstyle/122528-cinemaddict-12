@@ -1,12 +1,13 @@
 import Abstract from './abstract.js';
+import {SORTFILMSID} from '../const.js';
 
 const createsMainNavigationTemplate = (filterLength)=>{
   return `<nav class="main-navigation">
 <div class="main-navigation__items">
-  <a href="#all" class="main-navigation__item main-navigation__item--active" data-sort = 'allMovies'>All movies</a>
-  <a href="#watchlist" class="main-navigation__item"data-sort = 'watchlist'>Watchlist <span class="main-navigation__item-count">${filterLength.watchlist}</span></a>
-  <a href="#history" class="main-navigation__item"data-sort = 'history'>History <span class="main-navigation__item-count">${filterLength.history}</span></a>
-  <a href="#favorites" class="main-navigation__item"data-sort = 'favorites'>Favorites <span class="main-navigation__item-count">${filterLength.favorites}</span></a>
+  <a href="#all" class="main-navigation__item main-navigation__item--active" data-sort = '${SORTFILMSID.ALLMOVIES}'>All movies</a>
+  <a href="#watchlist" class="main-navigation__item"data-sort = '${SORTFILMSID.WATCHLIST}'>Watchlist <span class="main-navigation__item-count">${filterLength.watchlist}</span></a>
+  <a href="#history" class="main-navigation__item"data-sort = '${SORTFILMSID.HISTORY}'>History <span class="main-navigation__item-count">${filterLength.history}</span></a>
+  <a href="#favorites" class="main-navigation__item"data-sort = '${SORTFILMSID.FAVORITES}'>Favorites <span class="main-navigation__item-count">${filterLength.favorites}</span></a>
 </div>
 <a href="#stats" class="main-navigation__additional">Stats</a>
 </nav>`;

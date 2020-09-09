@@ -1,36 +1,39 @@
+import {SORTFILMSID} from '../const.js';
+
+
 export function filterArrayFilms(array, sortId) {
   let filmsSortedArray = [];
-  if (sortId === `watchlist`) {
+  if (sortId === SORTFILMSID.WATCHLIST) {
     filmsSortedArray = array.filter((film)=>film.watchlist);
   }
-  if (sortId === `history`) {
+  if (sortId === SORTFILMSID.HISTORY) {
     filmsSortedArray = array.filter((film)=>film.history);
   }
-  if (sortId === `favorites`) {
+  if (sortId === SORTFILMSID.FAVORITES) {
     filmsSortedArray = array.filter((film)=>film.favorites);
-  } if (sortId === `allMovies`) {
+  } if (sortId === SORTFILMSID.ALLMOVIES) {
     filmsSortedArray = array;
   }
   return filmsSortedArray;
 }
 
 export function sortFilms(array, sortId) {
-  if (sortId === `date`) {
+  if (sortId === SORTFILMSID.DATE) {
     return array.sort(function (a, b) {
       return b.relisData - a.relisData;
     });
   }
-  if (sortId === `rating`) {
+  if (sortId === SORTFILMSID.RATING) {
     return array.sort(function (a, b) {
       return b.rating - a.rating;
     });
   }
-  if (sortId === `topComments`) {
+  if (sortId === SORTFILMSID.TOPCOMMENTS) {
     return array.sort(function (a, b) {
       return b.commentsQuantity - a.commentsQuantity;
     });
   }
-  if (sortId === `default`) {
+  if (sortId === SORTFILMSID.DEFAULT) {
     return array;
   } else {
     return array;

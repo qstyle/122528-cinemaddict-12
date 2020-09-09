@@ -1,5 +1,5 @@
 
-import {FILMS_COUNT_PER_STEP, RENDER_POSITION, FILMS_COUNT_IN_EXTRA} from "../const.js";
+import {FILMS_COUNT_PER_STEP, RENDER_POSITION, FILMS_COUNT_IN_EXTRA, SORTFILMSID, PARENTFORRENDERFILM} from "../const.js";
 import FilmContainer from "../veiw/filmContainerBlock.js";
 import MoreButton from "../veiw/showMoreButton.js";
 import {render, deleteBlock} from "../utils/render.js";
@@ -116,18 +116,18 @@ export default class FilmList {
   }
 
   _renderTopRateFilms() {
-    sortFilms(this._sourceFilmData.slice(), `rating`)
-    .slice(0, FILMS_COUNT_IN_EXTRA).forEach((film) => this._renderFilmInPage(film, 1));
+    sortFilms(this._sourceFilmData.slice(), SORTFILMSID.RATING)
+    .slice(0, FILMS_COUNT_IN_EXTRA).forEach((film) => this._renderFilmInPage(film, PARENTFORRENDERFILM.TOPRTEFILM));
   }
   _renderTopComent() {
-    sortFilms(this._sourceFilmData.slice(), `topComments`)
-    .slice(0, FILMS_COUNT_IN_EXTRA).forEach((film) => this._renderFilmInPage(film, 2));
+    sortFilms(this._sourceFilmData.slice(), SORTFILMSID.TOPCOMMENTS)
+    .slice(0, FILMS_COUNT_IN_EXTRA).forEach((film) => this._renderFilmInPage(film, PARENTFORRENDERFILM.TOPCOMMENTFILM));
   }
 
   _renderFilms(from, to) {
     this._filmData
     .slice(from, to)
-    .forEach((film) => this._renderFilmInPage(film, 0));
+    .forEach((film) => this._renderFilmInPage(film, PARENTFORRENDERFILM.MAINFILM));
   }
 
   _renderNoFilm() {
