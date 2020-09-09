@@ -1,5 +1,5 @@
 
-import {FILMS_COUNT_PER_STEP, RENDER_POSITION} from "../const.js";
+import {FILMS_COUNT_PER_STEP, RENDER_POSITION, FILMS_COUNT_IN_EXTRA} from "../const.js";
 import FilmContainer from "../veiw/filmContainerBlock.js";
 import MoreButton from "../veiw/showMoreButton.js";
 import {render, deleteBlock} from "../utils/render.js";
@@ -101,7 +101,7 @@ export default class FilmList {
     this._mainNavigation.sortMainNavigationHandler(this._filterFilmArray);
   }
 
-  _renderTask(film) {
+  _renderFilmInPage(film, parent) {
     const filmCard = new FilmCard(film);
     const filmDetalsCard = new FilmDetalsCard(film);
     const filmContainer = this._container.querySelectorAll(`.films-list__container`);
@@ -112,13 +112,22 @@ export default class FilmList {
       render(bodyNode, filmDetalsCard, RENDER_POSITION.BEFOREEND);
       filmDetalsCard.onClosePopup(closePopup);
     });
-    render(filmContainer[0], filmCard, RENDER_POSITION.BEFOREEND);
+    render(filmContainer[parent], filmCard, RENDER_POSITION.BEFOREEND);
+  }
+
+  _renderTopRateFilms() {
+    sortFilms(this._sourceFilmData.slice(), `rating`)
+    .slice(0, FILMS_COUNT_IN_EXTRA).forEach((film) => this._renderFilmInPage(film, 1));
+  }
+  _renderTopComent() {
+    sortFilms(this._sourceFilmData.slice(), `topComments`)
+    .slice(0, FILMS_COUNT_IN_EXTRA).forEach((film) => this._renderFilmInPage(film, 2));
   }
 
   _renderFilms(from, to) {
     this._filmData
     .slice(from, to)
-    .forEach((film) => this._renderTask(film));
+    .forEach((film) => this._renderFilmInPage(film, 0));
   }
 
   _renderNoFilm() {
@@ -132,7 +141,7 @@ export default class FilmList {
     loadMoreButtonComponent.showMoreHandler(() => {
       this._filmData
          .slice(renderedFilmCount, renderedFilmCount + FILMS_COUNT_PER_STEP)
-         .forEach((filmData) => this._renderTask(filmData));
+         .forEach((filmData) => this._renderFilmInPage(filmData));
       renderedFilmCount += FILMS_COUNT_PER_STEP;
       if (renderedFilmCount >= this._filmData.length) {
         deleteBlock(loadMoreButtonComponent);
@@ -151,6 +160,8 @@ export default class FilmList {
     }
     this._renderSort();
     this._renderFilmList();
+    this._renderTopRateFilms();
+    this._renderTopComent();
     if (this._filmData.length > FILMS_COUNT_PER_STEP) {
       this._renderLoadMoreButton();
     }

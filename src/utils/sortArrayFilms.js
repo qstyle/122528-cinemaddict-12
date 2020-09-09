@@ -25,7 +25,11 @@ export function sortFilms(array, sortId) {
       return b.rating - a.rating;
     });
   }
-
+  if (sortId === `topComments`) {
+    return array.sort(function (a, b) {
+      return b.commentsQuantity - a.commentsQuantity;
+    });
+  }
   if (sortId === `default`) {
     return array;
   } else {
