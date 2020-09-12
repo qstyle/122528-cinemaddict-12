@@ -30,11 +30,15 @@ const generateMockData = ()=>{
     fullDescription: `blahblahblah`,
     ageRating: `0+`,
     productCountry: `USA`,
+    id: generateId(),
     watchlist: generateRandomNumber(0, 1),
     history: generateRandomNumber(0, 1),
     favorites: generateRandomNumber(0, 1),
   };
 };
+const generateId = () => Date.now() + parseInt(Math.random() * 10000, 10);
+
+
 const generateRandomPoster = ()=>{
   const postersArray = [`./images/posters/made-for-each-other.png`, `./images/posters/popeye-meets-sinbad.png`,
     `./images/posters/sagebrush-trail.jpg`,

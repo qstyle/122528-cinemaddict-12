@@ -3,16 +3,16 @@ import {FILMS_COUNT_PER_STEP, RENDER_POSITION, FILMS_COUNT_IN_EXTRA, SORTFILMSID
 import FilmContainer from "../veiw/filmContainerBlock.js";
 import MoreButton from "../veiw/showMoreButton.js";
 import {render, deleteBlock} from "../utils/render.js";
-import FilmCard from "../veiw/filmCardBlock.js";
+import {updateDataItem} from "../utils/common.js";
 import SectionFilm from "../veiw/sectionFilm.js";
 import FilmNoData from "../veiw/filmNoData.js";
 import TopRateFilms from "../veiw/topRateFilms.js";
 import MostComentedFilms from "../veiw/mostCommentedFilms.js";
-import FilmDetalsCard from "../veiw/filmDetalsCardBlock.js";
 import MainNavigation from "../veiw/mainNavigation.js";
 import SortBlock from "../veiw/sortBlock.js";
+import FilmCard from "./cardFilm.js";
 import {filterArrayFilms, sortFilms, getFilterLength} from "../utils/sortArrayFilms.js";
-const bodyNode = document.querySelector(`body`);
+
 
 export default class FilmList {
   constructor(container) {
@@ -24,8 +24,10 @@ export default class FilmList {
     this._sortBlock = new SortBlock();
     this._moreButton = new MoreButton();
     this._FilmNoData = new FilmNoData();
+    this._filmPresenter = {};
     this._sortFilmArray = this._sortFilmArray.bind(this);
     this._filterFilmArray = this._filterFilmArray.bind(this);
+    this._handleFilmChange = this._handleFilmChange.bind(this);
   }
 
   init(filmData) {
@@ -101,33 +103,30 @@ export default class FilmList {
     this._mainNavigation.sortMainNavigationHandler(this._filterFilmArray);
   }
 
-  _renderFilmInPage(film, parent) {
-    const filmCard = new FilmCard(film);
-    const filmDetalsCard = new FilmDetalsCard(film);
-    const filmContainer = this._container.querySelectorAll(`.films-list__container`);
-    function closePopup() {
-      deleteBlock(filmDetalsCard);
-    }
-    filmCard.showPopupHandler(()=>{
-      render(bodyNode, filmDetalsCard, RENDER_POSITION.BEFOREEND);
-      filmDetalsCard.onClosePopup(closePopup);
-    });
-    render(filmContainer[parent], filmCard, RENDER_POSITION.BEFOREEND);
+  _renderFilmInPage(film) {
+    const filmPresenter = new FilmCard(this._container, this._handleFilmChange);
+    filmPresenter.ini(film);
+    this._filmPresenter[film.id] = filmPresenter;
   }
 
-  _renderTopRateFilms() {
-    sortFilms(this._sourceFilmData.slice(), SORTFILMSID.RATING)
-    .slice(0, FILMS_COUNT_IN_EXTRA).forEach((film) => this._renderFilmInPage(film, PARENTFORRENDERFILM.TOPRTEFILM));
+  _handleFilmChange(updatedFilm) {
+    this._filmData = updateDataItem(this._filmData, updatedFilm);
+    this._sourceFilmData = updateDataItem(this._sourceFilmData, updatedFilm);
+    // this._filmPresenter[updatedFilm.id].ini(updatedFilm);
   }
-  _renderTopComent() {
-    sortFilms(this._sourceFilmData.slice(), SORTFILMSID.TOPCOMMENTS)
-    .slice(0, FILMS_COUNT_IN_EXTRA).forEach((film) => this._renderFilmInPage(film, PARENTFORRENDERFILM.TOPCOMMENTFILM));
-  }
+  // _renderTopRateFilms() {
+  //   sortFilms(this._sourceFilmData.slice(), SORTFILMSID.RATING)
+  //   .slice(0, FILMS_COUNT_IN_EXTRA).forEach((film) => this._renderFilmInPage(film, PARENTFORRENDERFILM.TOPRTEFILM));
+  // }
+  // _renderTopComent() {
+  //   sortFilms(this._sourceFilmData.slice(), SORTFILMSID.TOPCOMMENTS)
+  //   .slice(0, FILMS_COUNT_IN_EXTRA).forEach((film) => this._renderFilmInPage(film, PARENTFORRENDERFILM.TOPCOMMENTFILM));
+  // }
 
   _renderFilms(from, to) {
     this._filmData
     .slice(from, to)
-    .forEach((film) => this._renderFilmInPage(film, PARENTFORRENDERFILM.MAINFILM));
+    .forEach((film) => this._renderFilmInPage(film));
   }
 
   _renderNoFilm() {
@@ -160,8 +159,8 @@ export default class FilmList {
     }
     this._renderSort();
     this._renderFilmList();
-    this._renderTopRateFilms();
-    this._renderTopComent();
+    // this._renderTopRateFilms();
+    // this._renderTopComent();
     if (this._filmData.length > FILMS_COUNT_PER_STEP) {
       this._renderLoadMoreButton();
     }
