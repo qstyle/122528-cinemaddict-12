@@ -1,34 +1,52 @@
 import FilmCard from "../veiw/filmCardBlock.js";
 import FilmDetalsCard from "../veiw/filmDetalsCardBlock.js";
-import {render, deleteBlock} from "../utils/render.js";
+import {render, deleteBlock, replace} from "../utils/render.js";
 const bodyNode = document.querySelector(`body`);
 import {RENDER_POSITION} from "../const.js";
 
 export default class CardFilm {
   constructor(container, changeData) {
-    this.container = container;
+
+    this._container = container;
     this._changeData = changeData;
+    this.filmCard = null;
+    this.filmDetalsCard = null;
     this._handleWatchlistClick = this._handleWatchlistClick.bind(this);
+    this._handleHistoryClick = this._handleHistoryClick.bind(this);
+    this._handleFavoriteClick = this._handleFavoriteClick.bind(this);
   }
 
   ini(film) {
-    const filmCard = new FilmCard(film);
-    const filmDetalsCard = new FilmDetalsCard(film);
-    const filmContainer = this.container.querySelectorAll(`.films-list__container`);
+    this._filmData = film;
+    const prevFilmComponent = this.filmCard;
+    const prevFilmComponentDetals = this.filmDetalsCard;
+    this.filmCard = new FilmCard(film);
+    this.filmDetalsCard = new FilmDetalsCard(film);
+    const filmContainer = this._container.querySelectorAll(`.films-list__container`);
 
-    function closePopup() {
-      deleteBlock(filmDetalsCard);
+    function closePopup(data) {
+      deleteBlock(data);
     }
-    filmCard.showPopupHandler((evt)=>{
+
+    this.filmCard.showPopupHandler((evt)=>{
       if (evt.target.tagName !== `BUTTON`) {
-        render(bodyNode, filmDetalsCard, RENDER_POSITION.BEFOREEND);
-        filmDetalsCard.onClosePopup(closePopup);
+        render(bodyNode, this.filmDetalsCard, RENDER_POSITION.BEFOREEND);
+        this.filmDetalsCard.onClosePopup(closePopup.bind(this, this.filmDetalsCard));
+        this.filmDetalsCard.controlWatchlistDetalsHandler(this._handleWatchlistClick);
+        this.filmDetalsCard.controlWatchlistDetalsHandler(this._handleHistoryClick);
+        this.filmDetalsCard.controlWatchlistDetalsHandler(this._handleFavoriteClick);
       }
     });
-    render(filmContainer[0], filmCard, RENDER_POSITION.BEFOREEND);
-    filmCard.controlWatchlistHandler(this._handleWatchlistClick);
-    filmCard.controlWatchedtHandler(this.test);
-    filmCard.controlFavoritetHandler(this.test);
+
+    if (prevFilmComponent === null || prevFilmComponentDetals === null) {
+      render(filmContainer[0], this.filmCard, RENDER_POSITION.BEFOREEND);
+    } else {
+      replace(this.filmCard, prevFilmComponent);
+    }
+
+    this.filmCard.controlWatchlistHandler(this._handleWatchlistClick);
+    this.filmCard.controlWatchedtHandler(this._handleHistoryClick);
+    this.filmCard.controlFavoritetHandler(this._handleFavoriteClick);
   }
 
   _handleWatchlistClick() {
@@ -36,9 +54,32 @@ export default class CardFilm {
         Object.assign(
             {},
             this._filmData,
-
             {
               watchlist: !this._filmData.watchlist
+            }
+        )
+    );
+  }
+
+  _handleHistoryClick() {
+    this._changeData(
+        Object.assign(
+            {},
+            this._filmData,
+            {
+              history: !this._filmData.history
+            }
+        )
+    );
+  }
+
+  _handleFavoriteClick() {
+    this._changeData(
+        Object.assign(
+            {},
+            this._filmData,
+            {
+              favorites: !this._filmData.favorites
             }
         )
     );

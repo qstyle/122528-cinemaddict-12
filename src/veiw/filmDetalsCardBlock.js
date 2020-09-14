@@ -1,6 +1,9 @@
 import Abstract from './abstract.js';
 
 const filmDetalsCardBlock = (filmData)=>{
+  const buttonCheckedWatchlist = filmData.watchlist ? `checked` : null;
+  const buttonCheckedHistory = filmData.history ? `checked` : null;
+  const buttonCheckedFavorites = filmData.favorites ? `checked` : null;
   return `<section class="film-details">
 <form class="film-details__inner" action="" method="get">
   <div class="form-details__top-container">
@@ -67,13 +70,13 @@ const filmDetalsCardBlock = (filmData)=>{
     </div>
 
     <section class="film-details__controls">
-      <input type="checkbox" class="film-details__control-input visually-hidden" id="watchlist" name="watchlist">
+      <input type="checkbox" class="film-details__control-input visually-hidden" id="watchlist" name="watchlist" ${buttonCheckedWatchlist}>
       <label for="watchlist" class="film-details__control-label film-details__control-label--watchlist">Add to watchlist</label>
 
-      <input type="checkbox" class="film-details__control-input visually-hidden" id="watched" name="watched">
+      <input type="checkbox" class="film-details__control-input visually-hidden" id="watched" name="watched" ${buttonCheckedHistory}>
       <label for="watched" class="film-details__control-label film-details__control-label--watched">Already watched</label>
 
-      <input type="checkbox" class="film-details__control-input visually-hidden" id="favorite" name="favorite">
+      <input type="checkbox" class="film-details__control-input visually-hidden" id="favorite" name="favorite" ${buttonCheckedFavorites}>
       <label for="favorite" class="film-details__control-label film-details__control-label--favorite">Add to favorites</label>
     </section>
   </div>
@@ -176,6 +179,7 @@ export default class FilmDetalsCard extends Abstract {
   constructor(filmData) {
     super();
     this._filmData = filmData;
+    this.controlWatchlistDetalsHandler = this.controlWatchlistDetalsHandler.bind(this);
   }
 
   getTemplate() {
@@ -193,6 +197,21 @@ export default class FilmDetalsCard extends Abstract {
         callback();
       }
     }
+  }
+
+  controlWatchlistDetalsHandler(callback) {
+    this.getElement().querySelector(`.film-details__control-label--watchlist`)
+    .addEventListener(`click`, callback);
+  }
+
+  controlWatchlistDetalsHandler(callback) {
+    this.getElement().querySelector(`.film-details__control-label--watched`)
+    .addEventListener(`click`, callback);
+  }
+
+  controlWatchlistDetalsHandler(callback) {
+    this.getElement().querySelector(`.film-details__control-label--favorite`)
+    .addEventListener(`click`, callback);
   }
 }
 

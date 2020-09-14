@@ -1,10 +1,10 @@
-import Abstract from './abstract.js';
+import smart from './smart.js';
 
 
 const createFilmCardBlockTemplate = (filmData)=>{
   const watchlistClassAdd = filmData.watchlist ? `film-card__controls-item--active` : null;
   const historyClassAdd = filmData.history ? `film-card__controls-item--active` : null;
-  const favoriteClassAdd = filmData.favorite ? `film-card__controls-item--active` : null;
+  const favoriteClassAdd = filmData.favorites ? `film-card__controls-item--active` : null;
   return `<article class="film-card">
   <h3 class="film-card__title">${filmData.filmName}</h3>
   <p class="film-card__rating">${filmData.rating}</p>
@@ -24,7 +24,7 @@ const createFilmCardBlockTemplate = (filmData)=>{
   </article>`;
 };
 
-export default class FilmCard extends Abstract {
+export default class FilmCard extends smart {
   constructor(filmData) {
     super();
     this._filmData = filmData;

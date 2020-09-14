@@ -112,7 +112,7 @@ export default class FilmList {
   _handleFilmChange(updatedFilm) {
     this._filmData = updateDataItem(this._filmData, updatedFilm);
     this._sourceFilmData = updateDataItem(this._sourceFilmData, updatedFilm);
-    // this._filmPresenter[updatedFilm.id].ini(updatedFilm);
+    this._filmPresenter[updatedFilm.id].ini(updatedFilm);
   }
   // _renderTopRateFilms() {
   //   sortFilms(this._sourceFilmData.slice(), SORTFILMSID.RATING)
