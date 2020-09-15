@@ -140,6 +140,8 @@ export default class FilmDetalsCard extends Smart {
     this._setInnerHandlers();
     this._callback = {};
     this._clickHandler = this._clickHandler.bind(this);
+    this._escKeyDownHandler = this._escKeyDownHandler.bind(this);
+
 
   }
 
@@ -162,6 +164,7 @@ export default class FilmDetalsCard extends Smart {
   //   }
   // }
 
+
   controlWatchlistDetalsHandler(callback) {
     this.getElement().querySelector(`.film-details__control-label--watchlist`)
     .addEventListener(`click`, callback);
@@ -180,6 +183,15 @@ export default class FilmDetalsCard extends Smart {
     this._callback.click = callback;
     this.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, this._clickHandler);
   }
+  setEscCloseHandler(callback) {
+    this._callback.escPress = callback;
+    document.addEventListener(`keydown`, this._escKeyDownHandler);
+  }
+
+  _escKeyDownHandler(evt) {
+    this._callback.escPress(evt);
+  }
+
   _clickHandler(evt) {
     this._callback.click(evt);
 
@@ -199,8 +211,6 @@ export default class FilmDetalsCard extends Smart {
     this.getElement().querySelector(`#watchlist`).addEventListener(`change`, this._handleWatchlistClick);
     this.getElement().querySelector(`#watched`).addEventListener(`click`, this._handleHistoryClick);
     this.getElement().querySelector(`#favorite`).addEventListener(`click`, this._handleFavoriteClick);
-
-
   }
 
   resetHandlers() {

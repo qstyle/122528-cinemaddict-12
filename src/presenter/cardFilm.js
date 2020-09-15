@@ -16,6 +16,7 @@ export default class CardFilm {
     this._handleHistoryClick = this._handleHistoryClick.bind(this);
     this._handleFavoriteClick = this._handleFavoriteClick.bind(this);
     this._closePopup = this._closePopup.bind(this);
+    this._escCloser = this._escCloser.bind(this);
   }
 
   ini(film) {
@@ -34,7 +35,8 @@ export default class CardFilm {
           render(bodyNode, this.filmDetalsCard, RENDER_POSITION.BEFOREEND);
           this.filmDetalsCard.resetHandlers();
           this.filmDetalsCard.setCloseHandler(this._closePopup);
-          this.mode = MODE.OPEN
+          this.filmDetalsCard.setEscCloseHandler(this._escCloser);
+          this.mode = MODE.OPEN;
         }
       }
     });
@@ -81,6 +83,13 @@ export default class CardFilm {
             }
         )
     );
+  }
+
+
+  _escCloser(evt) {
+    if (evt.key === `Escape` || evt.key === `Esc`) {
+      this._closePopup();
+    }
   }
 
   _handleFavoriteClick() {
