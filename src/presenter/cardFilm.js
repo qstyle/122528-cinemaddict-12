@@ -2,39 +2,40 @@ import FilmCard from "../veiw/filmCardBlock.js";
 import FilmDetalsCard from "../veiw/filmDetalsCardBlock.js";
 import {render, deleteBlock, replace} from "../utils/render.js";
 const bodyNode = document.querySelector(`body`);
-import {RENDER_POSITION} from "../const.js";
+import {RENDER_POSITION, MODE} from "../const.js";
 
 export default class CardFilm {
-  constructor(container, changeData) {
-
+  constructor(container, changeData, changeMode) {
+    this.changeMode = changeMode;
     this._container = container;
     this._changeData = changeData;
     this.filmCard = null;
+    this.mode = MODE.DEFAULT;
     this.filmDetalsCard = null;
     this._handleWatchlistClick = this._handleWatchlistClick.bind(this);
     this._handleHistoryClick = this._handleHistoryClick.bind(this);
     this._handleFavoriteClick = this._handleFavoriteClick.bind(this);
+    this._closePopup = this._closePopup.bind(this);
   }
 
   ini(film) {
     this._filmData = film;
+
     const prevFilmComponent = this.filmCard;
     const prevFilmComponentDetals = this.filmDetalsCard;
     this.filmCard = new FilmCard(film);
     this.filmDetalsCard = new FilmDetalsCard(film);
     const filmContainer = this._container.querySelectorAll(`.films-list__container`);
 
-    function closePopup(data) {
-      deleteBlock(data);
-    }
 
     this.filmCard.showPopupHandler((evt)=>{
       if (evt.target.tagName !== `BUTTON`) {
-        render(bodyNode, this.filmDetalsCard, RENDER_POSITION.BEFOREEND);
-        this.filmDetalsCard.onClosePopup(closePopup.bind(this, this.filmDetalsCard));
-        this.filmDetalsCard.controlWatchlistDetalsHandler(this._handleWatchlistClick);
-        this.filmDetalsCard.controlWatchlistDetalsHandler(this._handleHistoryClick);
-        this.filmDetalsCard.controlWatchlistDetalsHandler(this._handleFavoriteClick);
+        if (this.mode === MODE.DEFAULT) {
+          render(bodyNode, this.filmDetalsCard, RENDER_POSITION.BEFOREEND);
+          this.filmDetalsCard.resetHandlers();
+          this.filmDetalsCard.setCloseHandler(this._closePopup);
+          this.mode = MODE.OPEN
+        }
       }
     });
 
@@ -47,6 +48,15 @@ export default class CardFilm {
     this.filmCard.controlWatchlistHandler(this._handleWatchlistClick);
     this.filmCard.controlWatchedtHandler(this._handleHistoryClick);
     this.filmCard.controlFavoritetHandler(this._handleFavoriteClick);
+  }
+  _handleModeChange() {
+    Object
+      .values(this._taskPresenter)
+      .forEach((presenter) => presenter.resetView());
+  }
+
+  _closePopup() {
+    deleteBlock(this.filmDetalsCard);
   }
 
   _handleWatchlistClick() {
@@ -84,4 +94,5 @@ export default class CardFilm {
         )
     );
   }
+
 }

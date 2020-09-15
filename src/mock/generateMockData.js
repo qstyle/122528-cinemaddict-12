@@ -34,6 +34,9 @@ const generateMockData = ()=>{
     watchlist: generateRandomNumber(0, 1),
     history: generateRandomNumber(0, 1),
     favorites: generateRandomNumber(0, 1),
+    comment: {
+      emotion: null
+    }
   };
 };
 const generateId = () => Date.now() + parseInt(Math.random() * 10000, 10);

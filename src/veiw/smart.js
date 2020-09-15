@@ -20,7 +20,6 @@ export default class Smart extends Abstract {
     if (justDataUpdating) {
       return;
     }
-
     this.updateElement();
   }
 
@@ -33,11 +32,10 @@ export default class Smart extends Abstract {
 
     parent.replaceChild(newElement, prevElement);
     prevElement = null; // Чтобы окончательно "убить" ссылку на prevElement
-
-    this.restoreHandlers();
+    // this.restoreHandlers();
   }
 
-  restoreHandlers() {
-    throw new Error(`Abstract method not implemented: resetHandlers`);
-  }
+  // restoreHandlers() {
+  //   throw new Error(`Abstract method not implemented: resetHandlers`);
+  // }
 }

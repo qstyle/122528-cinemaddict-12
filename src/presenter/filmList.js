@@ -28,6 +28,7 @@ export default class FilmList {
     this._sortFilmArray = this._sortFilmArray.bind(this);
     this._filterFilmArray = this._filterFilmArray.bind(this);
     this._handleFilmChange = this._handleFilmChange.bind(this);
+    this._handleModeChange = this._handleModeChange(this);
   }
 
   init(filmData) {
@@ -38,6 +39,12 @@ export default class FilmList {
     render(this._sectionFilm, this._topRateFilms, RENDER_POSITION.BEFOREEND);
     render(this._sectionFilm, this._mostComentedFilms, RENDER_POSITION.BEFOREEND);
     this._renderFilm();
+  }
+
+  _handleModeChange() {
+    Object
+      .values(this._filmPresenter)
+      .forEach((presenter) => presenter.resetView());
   }
 
   _sortFilmArray(sortType) {
@@ -104,7 +111,7 @@ export default class FilmList {
   }
 
   _renderFilmInPage(film) {
-    const filmPresenter = new FilmCard(this._container, this._handleFilmChange);
+    const filmPresenter = new FilmCard(this._container, this._handleFilmChange, this._handleModeChange);
     filmPresenter.ini(film);
     this._filmPresenter[film.id] = filmPresenter;
   }

@@ -21,3 +21,8 @@ export const PARENTFORRENDERFILM = {
   TOPRTEFILM: 1,
   TOPCOMMENTFILM: 2,
 };
+
+export const MODE = {
+  DEFAULT: `DEFAULT`,
+  OPEN: `OPEN_DETALS`
+};
