@@ -1,10 +1,15 @@
 import Smart from './smart.js';
+import moment from 'moment';
 
 const filmDetalsCardBlock = (filmData)=>{
   const buttonCheckedWatchlist = filmData.watchlist ? `checked` : null;
   const buttonCheckedHistory = filmData.history ? `checked` : null;
   const buttonCheckedFavorites = filmData.favorites ? `checked` : null;
   const emodji = filmData.comment.emotion;
+  // const reliseDate = moment(filmData.filmInfo.release.date).format(`DD MMMM YYYY`);
+  const runTime = moment(filmData.timeLine).format(`h[h] mm[m]`);
+  console.log(runTime);
+  console.log(filmData.timeLine);
   return `<section class="film-details">
 <form class="film-details__inner" action="" method="get">
   <div class="form-details__top-container">
@@ -49,7 +54,7 @@ const filmDetalsCardBlock = (filmData)=>{
           </tr>
           <tr class="film-details__row">
             <td class="film-details__term">Runtime</td>
-            <td class="film-details__cell">${filmData.timeLine}</td>
+            <td class="film-details__cell">${runTime}</td>
           </tr>
           <tr class="film-details__row">
             <td class="film-details__term">Country</td>
