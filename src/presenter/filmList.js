@@ -1,5 +1,5 @@
 
-import {FILMS_COUNT_PER_STEP, RENDER_POSITION, FILMS_COUNT_IN_EXTRA, SORTFILMSID, PARENTFORRENDERFILM} from "../const.js";
+import {FILMS_COUNT_PER_STEP, RENDER_POSITION} from "../const.js";
 import FilmContainer from "../veiw/filmContainerBlock.js";
 import MoreButton from "../veiw/showMoreButton.js";
 import {render, deleteBlock} from "../utils/render.js";
@@ -111,7 +111,7 @@ export default class FilmList {
   }
 
   _renderFilmInPage(film) {
-    const filmPresenter = new FilmCard(this._container, this._handleFilmChange, this._handleModeChange);
+    const filmPresenter = new FilmCard(this._container, this._handleFilmChange);
     filmPresenter.ini(film);
     this._filmPresenter[film.id] = filmPresenter;
   }

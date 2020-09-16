@@ -141,6 +141,7 @@ export default class FilmDetalsCard extends Smart {
     this._callback = {};
     this._clickHandler = this._clickHandler.bind(this);
     this._escKeyDownHandler = this._escKeyDownHandler.bind(this);
+    this.resetData = this.resetData.bind(this);
 
 
   }
@@ -216,6 +217,13 @@ export default class FilmDetalsCard extends Smart {
   resetHandlers() {
     this._setInnerHandlers();
     this.setCloseHandler(this._callback.click);
+  }
+  resetData() {
+    this.updateData({
+      comment: {
+        emotion: null,
+      }
+    });
   }
 
   _handleWatchlistClick() {

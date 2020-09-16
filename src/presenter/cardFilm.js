@@ -21,7 +21,6 @@ export default class CardFilm {
 
   ini(film) {
     this._filmData = film;
-
     const prevFilmComponent = this.filmCard;
     const prevFilmComponentDetals = this.filmDetalsCard;
     this.filmCard = new FilmCard(film);
@@ -37,6 +36,9 @@ export default class CardFilm {
           this.filmDetalsCard.setCloseHandler(this._closePopup);
           this.filmDetalsCard.setEscCloseHandler(this._escCloser);
           this.mode = MODE.OPEN;
+        } else {
+          this._closePopup();
+          this.mode = MODE.DEFAULT;
         }
       }
     });
@@ -59,6 +61,8 @@ export default class CardFilm {
 
   _closePopup() {
     deleteBlock(this.filmDetalsCard);
+    this.mode = MODE.DEFAULT;
+    this.filmDetalsCard.resetData();
   }
 
   _handleWatchlistClick() {
