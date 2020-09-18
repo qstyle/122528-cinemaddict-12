@@ -1,39 +1,39 @@
-import {SORTFILMSID} from '../const.js';
+import {SORTFILMS} from '../const.js';
 
 
 export function filterArrayFilms(array, sortId) {
   let filmsSortedArray = [];
-  if (sortId === SORTFILMSID.WATCHLIST) {
+  if (sortId === SORTFILMS.WATCHLIST) {
     filmsSortedArray = array.filter((film)=>film.watchlist);
   }
-  if (sortId === SORTFILMSID.HISTORY) {
+  if (sortId === SORTFILMS.HISTORY) {
     filmsSortedArray = array.filter((film)=>film.history);
   }
-  if (sortId === SORTFILMSID.FAVORITES) {
+  if (sortId === SORTFILMS.FAVORITES) {
     filmsSortedArray = array.filter((film)=>film.favorites);
-  } if (sortId === SORTFILMSID.ALLMOVIES) {
+  } if (sortId === SORTFILMS.ALLMOVIES) {
     filmsSortedArray = array;
   }
   return filmsSortedArray;
 }
 
 export function sortFilms(array, sortId) {
-  if (sortId === SORTFILMSID.DATE) {
+  if (sortId === SORTFILMS.DATE) {
     return array.sort(function (a, b) {
       return b.relisData - a.relisData;
     });
   }
-  if (sortId === SORTFILMSID.RATING) {
+  if (sortId === SORTFILMS.RATING) {
     return array.sort(function (a, b) {
       return b.rating - a.rating;
     });
   }
-  if (sortId === SORTFILMSID.TOPCOMMENTS) {
+  if (sortId === SORTFILMS.TOPCOMMENTS) {
     return array.sort(function (a, b) {
       return b.commentsQuantity - a.commentsQuantity;
     });
   }
-  if (sortId === SORTFILMSID.DEFAULT) {
+  if (sortId === SORTFILMS.DEFAULT) {
     return array;
   } else {
     return array;

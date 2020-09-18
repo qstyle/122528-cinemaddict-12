@@ -5,7 +5,7 @@ export const RENDER_POSITION = {
   BEFOREEND: `beforeend`
 };
 
-export const SORTFILMSID = {
+export const SORTFILMS = {
   WATCHLIST: `watchlist`,
   HISTORY: `history`,
   FAVORITES: `favorites`,
