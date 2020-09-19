@@ -26,3 +26,15 @@ export const MODE = {
   DEFAULT: `DEFAULT`,
   OPEN: `OPEN_DETALS`
 };
+
+export const UPDATETYPE = {
+  PATCH: `PATCH`,
+  MINOR: `MINOR`,
+  MAJOR: `MAJOR`
+};
+
+export const USERACTION = {
+  UPDATE_FILM: `UPDATE_FILM`,
+  DELETE_COMMENT: `DELETE_COMMENT`,
+  ADD_COMMENT: `ADD_COMMENT`,
+};

@@ -2,7 +2,7 @@ import FilmCard from "../veiw/filmCardBlock.js";
 import FilmDetalsCard from "../veiw/filmDetalsCardBlock.js";
 import {render, deleteBlock, replace} from "../utils/render.js";
 const bodyNode = document.querySelector(`body`);
-import {RENDER_POSITION, MODE} from "../const.js";
+import {RENDER_POSITION, MODE, UPDATETYPE, USERACTION} from "../const.js";
 
 export default class CardFilm {
   constructor(container, changeData, changeMode) {
@@ -17,6 +17,7 @@ export default class CardFilm {
     this._handleFavoriteClick = this._handleFavoriteClick.bind(this);
     this._closePopup = this._closePopup.bind(this);
     this._escCloser = this._escCloser.bind(this);
+    this.destroy = this.destroy.bind(this);
   }
 
   ini(film) {
@@ -53,6 +54,12 @@ export default class CardFilm {
     this.filmCard.controlWatchedtHandler(this._handleHistoryClick);
     this.filmCard.controlFavoritetHandler(this._handleFavoriteClick);
   }
+
+  destroy() {
+    deleteBlock(this.filmCard);
+    deleteBlock(this.filmDetalsCard);
+  }
+
   _handleModeChange() {
     Object
       .values(this._taskPresenter)
@@ -67,6 +74,8 @@ export default class CardFilm {
 
   _handleWatchlistClick() {
     this._changeData(
+        USERACTION.UPDATE_FILM,
+        UPDATETYPE.MINOR,
         Object.assign(
             {},
             this._filmData,
@@ -79,6 +88,8 @@ export default class CardFilm {
 
   _handleHistoryClick() {
     this._changeData(
+        USERACTION.UPDATE_FILM,
+        UPDATETYPE.MINOR,
         Object.assign(
             {},
             this._filmData,
@@ -89,15 +100,10 @@ export default class CardFilm {
     );
   }
 
-
-  _escCloser(evt) {
-    if (evt.key === `Escape` || evt.key === `Esc`) {
-      this._closePopup();
-    }
-  }
-
   _handleFavoriteClick() {
     this._changeData(
+        USERACTION.UPDATE_FILM,
+        UPDATETYPE.MINOR,
         Object.assign(
             {},
             this._filmData,
@@ -107,5 +113,12 @@ export default class CardFilm {
         )
     );
   }
+
+  _escCloser(evt) {
+    if (evt.key === `Escape` || evt.key === `Esc`) {
+      this._closePopup();
+    }
+  }
+
 
 }
