@@ -1,8 +1,11 @@
 export const FILMS_COUNT_PER_STEP = 5;
+
 export const FILMS_COUNT_IN_EXTRA = 2;
+
 export const RENDER_POSITION = {
   AFTERBEGIN: `afterbegin`,
-  BEFOREEND: `beforeend`
+  BEFOREEND: `beforeend`,
+  BEFOREBEGIN: `beforebegin`
 };
 
 export const SORTFILMS = {
@@ -37,4 +40,13 @@ export const USERACTION = {
   UPDATE_FILM: `UPDATE_FILM`,
   DELETE_COMMENT: `DELETE_COMMENT`,
   ADD_COMMENT: `ADD_COMMENT`,
+};
+
+export const FilterType = {
+  ALL: `all`,
+  OVERDUE: `overdue`,
+  TODAY: `today`,
+  FAVORITES: `favorites`,
+  REPEATING: `repeating`,
+  ARCHIVE: `archive`
 };

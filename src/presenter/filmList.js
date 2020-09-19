@@ -9,12 +9,13 @@ import TopRateFilms from "../veiw/topRateFilms.js";
 import MostComentedFilms from "../veiw/mostCommentedFilms.js";
 import SortBlock from "../veiw/sortBlock.js";
 import FilmCard from "./cardFilm.js";
-import {filterArrayFilms, sortFilms, getFilterLength} from "../utils/sortArrayFilms.js";
+import {sortFilms, filter} from "../utils/sortArrayFilms.js";
 
 
 export default class FilmList {
-  constructor(container, filmsModel) {
+  constructor(container, filmsModel, filterModel) {
     this._filmsModel = filmsModel;
+    this._filterModel = filterModel;
     this.filmModelSource = filmsModel;
     this._container = container;
     this._filmContainer = new FilmContainer();
@@ -36,6 +37,7 @@ export default class FilmList {
     this._clearFilm = this._clearFilm.bind(this);
 
     this._filmsModel.addObserver(this._handleModelEvent);
+    this._filterModel.addObserver(this._handleModelEvent);
   }
 
   init() {
@@ -48,15 +50,18 @@ export default class FilmList {
   }
 
   _getFilms() {
+    const filterType = this._filterModel.getFilter();
+    const films = this._filmsModel.getFilms();
+    const filteredFilm = filter[filterType](films);
     switch (this._currentSortType) {
       case SORTFILMS.DATE:
-        return sortFilms(this._filmsModel.getFilms().slice(), SORTFILMS.DATE);
+        return sortFilms(filteredFilm, SORTFILMS.DATE);
       case SORTFILMS.RATING:
-        return sortFilms(this._filmsModel.getFilms().slice(), SORTFILMS.RATING);
-      case SORTFILMS.DEFAULT:
-        this._filmsModel = this.filmModelSource;
+        return sortFilms(filteredFilm, SORTFILMS.RATING);
+
     }
-    return this._filmsModel.getFilms();
+    return filteredFilm;
+
   }
 
 
@@ -77,7 +82,7 @@ export default class FilmList {
     }
     this._sortBlock = new SortBlock(this._currentSortType);
     this._sortBlock.sortFilmsHandler(this._handleSortTypeChange);
-    render(this._container, this._sortBlock, RENDER_POSITION.BEFOREEND);
+    render(this._sectionFilm, this._sortBlock, RENDER_POSITION.AFTERBEGIN);
   }
 
   _renderFilmInPage(film) {
@@ -97,17 +102,14 @@ export default class FilmList {
 
   _handleModelEvent(updateType, data) {
     switch (updateType) {
-      case UPDATETYPE.PATCH:
-        console.log(`PATCH`);
-        break;
       case UPDATETYPE.MINOR:
-
         this._filmPresenter[data.id].ini(data);
-        // this._clearFilm();
-        // this._renderAllFilms();
+        this._clearFilm();
+        this._renderAllFilms();
         break;
       case UPDATETYPE.MAJOR:
-        console.log(`MAJOR`);
+        this._clearFilm({resetRenderedTaskCount: true, resetSortType: true});
+        this._renderAllFilms();
         break;
     }
 
@@ -148,7 +150,7 @@ export default class FilmList {
     Object
       .values(this._filmPresenter)
       .forEach((presenter) => presenter.destroy());
-      this._filmPresenter = {};
+    this._filmPresenter = {};
 
     deleteBlock(this._sortBlock);
     deleteBlock(this._FilmNoData);
