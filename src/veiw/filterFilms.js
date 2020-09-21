@@ -1,11 +1,15 @@
 import Abstract from "./abstract.js";
+import {SORTFILMS} from "../const.js";
 
 const createFilterItemTemplate = (filter, currentFilterType) => {
   const {type, name, count} = filter;
   return (
     `<a href="#" id = "${type}"
-     class="main-navigation__item ${type === currentFilterType ? `main-navigation__item--active` : ``}">${name}
-     <span class="main-navigation__item-count">${count}</span></a>`
+     class="main-navigation__item ${type === currentFilterType ?
+      `main-navigation__item--active` : ``}">
+     ${name}${type !== SORTFILMS.ALLMOVIES ? `
+     <span class="main-navigation__item-count">${count}</span>` : ` `}
+     </a>`
   );
 };
 

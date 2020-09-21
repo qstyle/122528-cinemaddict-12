@@ -3,12 +3,16 @@ import FilmDetalsCard from "../veiw/filmDetalsCardBlock.js";
 import {render, deleteBlock, replace} from "../utils/render.js";
 const bodyNode = document.querySelector(`body`);
 import {RENDER_POSITION, MODE, UPDATETYPE, USERACTION} from "../const.js";
+import CommentsModel from "../model/modelComment.js";
+
+import Comment from '../veiw/comment.js';
 
 export default class CardFilm {
   constructor(container, changeData, changeMode) {
     this.changeMode = changeMode;
     this._container = container;
     this._changeData = changeData;
+    this._commentModel = new CommentsModel();
     this.filmCard = null;
     this.mode = MODE.DEFAULT;
     this.filmDetalsCard = null;
@@ -27,6 +31,7 @@ export default class CardFilm {
     this.filmCard = new FilmCard(film);
     this.filmDetalsCard = new FilmDetalsCard(film);
     const filmContainer = this._container.querySelectorAll(`.films-list__container`);
+    this._renderComments();
 
 
     this.filmCard.showPopupHandler((evt)=>{
@@ -54,6 +59,17 @@ export default class CardFilm {
     this.filmCard.controlWatchedtHandler(this._handleHistoryClick);
     this.filmCard.controlFavoritetHandler(this._handleFavoriteClick);
   }
+  _renderComments() {
+    this._commentModel.getComments().map((item) => {
+
+      const comment = new Comment(item);
+      // comment.setHandleClickDelete(this._handleViewAction);
+      const newCommentElement = this._filmPopupComponent.getElement().querySelector(`.film-details__comments-list`);
+      render(newCommentElement, comment, RENDER_POSITION.BEFOREEND);
+    });
+
+  }
+
 
   destroy() {
     deleteBlock(this.filmCard);
